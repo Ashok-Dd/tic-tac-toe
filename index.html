@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body{
+            overflow: hidden;
+        }
+        .container{
+            align-items: center;
+            justify-content: center;
+            margin-left: 38%;
+            margin-top: 5%;
+            width: 380px;
+            height: 380px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .blocks{
+            border: 6px solid blueviolet;
+            width: 120px;
+            height: 120px;
+            margin-top: 3px;
+            background-color: whitesmoke;
+            font-size: 60px;
+            color: blueviolet;
+            border-radius: 10px;
+            transition: width 0.3s, height 0.3s,font-size 0.3s;
+        }
+        .blocks:hover{
+            width: 115px;
+            height: 115px;
+            font-size: 50px;
+        }
+        .restart{
+            width: 120px;
+            margin-left: 46.5%;
+            height: 40px;
+            border: 6px solid lawngreen;
+            background-color: lawngreen;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bolder;
+            transition: box-shadow 0.3s;
+        }
+        .restart:hover{
+            box-shadow: 0px 0px 10px 2px lawngreen;
+        }
+        h2{
+            color: whitesmoke;
+            letter-spacing: 3px;
+            text-align: center;
+            font-size: 60px;
+        }
+
+        @media screen and (max-width : 500px){
+            .container{
+            align-items: center;
+            justify-content: center;
+            margin-left: 5%;
+            margin-top: 50%;
+            width: 90%;
+            height: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .blocks{
+            border: 6px solid blueviolet;
+            width: 90px;
+            height: 90px;
+            margin-top: 3px;
+            background-color: whitesmoke;
+            font-size: 40px;
+            color: blueviolet;
+            border-radius: 10px;
+            transition: width 0.3s, height 0.3s,font-size 0.3s;
+        }
+        .blocks:hover{
+            width: 85px;
+            height: 85px;
+            font-size: 30px;
+        }
+        .restart{
+            width: 120px;
+            
+            margin-left: 32%;
+            height: 40px;
+            border: 6px solid lawngreen;
+            background-color: lawngreen;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bolder;
+            transition: box-shadow 0.3s;
+        }
+        h2{
+            color: whitesmoke;
+            letter-spacing: 3px;
+            text-align: center;
+            font-size: 30px;
+        }
+
+            
+        }
+
+
+
+
+
+
+    </style>
+</head>
+<body bgcolor="black">
+    <h2>TIC-TAC-TOE</h2>
+    <div class="container">
+        <button id="1" class="blocks"></button>
+        <button id="2" class="blocks"></button>
+        <button id="3" class="blocks"></button>
+        <button id="4" class="blocks"></button>
+        <button id="5" class="blocks"></button>
+        <button id="6" class="blocks"></button>
+        <button id="7" class="blocks"></button>
+        <button id="8" class="blocks"></button>
+        <button id="9" class="blocks"></button>
+    </div>
+    <br>
+    <button onclick="location.reload()" class="restart">Restart</button>
+    <script>
+        const buttons = document.querySelectorAll('.blocks');
+        let currentPlayer = 'X';
+        const winningPatterns = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ];
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '') {
+                    button.textContent = currentPlayer;
+                    if (checkWin(currentPlayer)) {
+                        alert(`Player ${currentPlayer} wins!`);
+                        disableButtons();
+                    } else if (isTie()) {
+                        alert('It\'s a tie!');
+                    } else {
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    }
+                }
+            });
+        });
+
+        function checkWin(player) {
+            return winningPatterns.some(pattern => {
+                return pattern.every(index => {
+                    return document.getElementById(index).textContent === player;
+                });
+            });
+        }
+
+        function isTie() {
+            return [...buttons].every(button => button.textContent !== '');
+        }
+
+        function disableButtons() {
+            buttons.forEach(button => button.disabled = true);
+        }
+    </script>
+</body>
+</html>
